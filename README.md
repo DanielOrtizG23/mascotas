@@ -1,43 +1,63 @@
-# Astro Starter Kit: Minimal
+# Dispensario Mascotas
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Tienda en línea pequeña y estática enfocada en **alimento para mascotas** (gatos y perros), construida con [Astro](https://astro.build) y TypeScript.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+> **Estado:** en desarrollo. Actualmente solo existe una página base; el catálogo y el diseño se están construyendo.
 
-## 🚀 Project Structure
+## Objetivos
 
-Inside of your Astro project, you'll see the following folders and files:
+- Catálogo de alimento para **perros** y **gatos** (alcance inicial: sólo alimento).
+- Sitio **estático** (HTML generado en build, sin backend), con pocas imágenes de producto.
+- Diseño profesional, moderno y con identidad visual propia.
+- Código tipado en TypeScript estricto y siguiendo las buenas prácticas de Astro.
+
+## Stack tecnológico
+
+| Área            | Tecnología                                  |
+| :-------------- | :------------------------------------------ |
+| Framework       | Astro 7 (`astro@^7.4.12`)                   |
+| Lenguaje        | TypeScript (configuración `astro/tsconfigs/strict`) |
+| Imágenes        | `sharp` (optimización de imágenes en build) |
+| Entorno         | Node.js `>=22.23.4`                         |
+
+## Estructura del proyecto
 
 ```text
 /
-├── public/
+├── public/              # Activos estáticos sin procesar (favicon, etc.)
 ├── src/
 │   └── pages/
-│       └── index.astro
-└── package.json
+│       └── index.astro  # Página principal (enrutado por nombre de archivo)
+├── AGENTS.md            # Guía para asistentes de IA
+├── astro.config.mjs     # Configuración de Astro
+├── package.json
+└── tsconfig.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Astro expone cada archivo de `src/pages/` como una ruta según su nombre. Los componentes reutilizables se colocarán en `src/components/` y los datos del catálogo en `src/data/`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Requisitos
 
-Any static assets, like images, can be placed in the `public/` directory.
+- [Node.js](https://nodejs.org/) 22.23.4 o superior.
+- npm (incluido con Node.js).
 
-## 🧞 Commands
+## Instalación y comandos
 
-All commands are run from the root of the project, from a terminal:
+Ejecuta los comandos desde la raíz del proyecto:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Comando                   | Acción                                              |
+| :------------------------ | :-------------------------------------------------- |
+| `npm install`             | Instala las dependencias                            |
+| `npm run dev`             | Inicia el servidor de desarrollo en `localhost:4321` |
+| `npm run build`           | Genera el sitio de producción en `./dist/`          |
+| `npm run preview`         | Previsualiza el build de producción localmente      |
+| `npm run astro -- check`  | Valida tipos y archivos `.astro`                    |
+| `npm run astro -- --help` | Muestra la ayuda de la CLI de Astro                 |
 
-## 👀 Want to learn more?
+## Documentación de referencia
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Documentación de Astro](https://docs.astro.build)
+- [Rutas y páginas](https://docs.astro.build/en/guides/routing/)
+- [Componentes de Astro](https://docs.astro.build/en/basics/astro-components/)
+- [Estilos](https://docs.astro.build/en/guides/styling/)
+- [Colecciones de contenido](https://docs.astro.build/en/guides/content-collections/)

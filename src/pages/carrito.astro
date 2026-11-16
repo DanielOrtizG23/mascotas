@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Mi carrito" description="Revisa tu pedido y confírmalo por WhatsApp.">
+	<section class="section">
+		<div class="container">
+			<span class="eyebrow">Tu pedido</span>
+			<h1 class="title">Mi carrito</h1>
+
+			<div class="cart-layout">
+				<div>
+					<p class="empty" data-cart-empty hidden>
+						Tu carrito está vacío. <a href="/perros">Explora el catálogo</a> y agrega tus productos.
+					</p>
+					<ul class="cart-list" data-cart-list hidden></ul>
+				</div>
+
+				<aside class="summary" data-cart-summary hidden>
+					<h2>Resumen</h2>
+					<div class="summary__row">
+						<span>Total estimado</span>
+						<strong data-cart-total>$0</strong>
+					</div>
+					<p class="summary__note">
+						Al confirmar se abrirá WhatsApp con el detalle de tu pedido para coordinar el pago y la entrega.
+					</p>
+					<a
+						class="btn btn-accent summary__checkout"
+						data-whatsapp-checkout
+						href="#"
+						target="_blank"
+						rel="noopener"
+					>
+						Confirmar pedido por WhatsApp
+					</a>
+				</aside>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.title {
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 800;
+		margin-bottom: 2rem;
+	}
+
+	.empty {
+		padding: 2rem;
+		border: 2px dashed var(--color-border);
+		border-radius: var(--radius-lg);
+		color: var(--color-muted);
+		text-align: center;
+	}
+
+	.empty a {
+		color: var(--color-primary-strong);
+		font-weight: 600;
+	}
+
+	.cart-layout {
+		display: grid;
+		grid-template-columns: 1fr 360px;
+		gap: 2rem;
+		align-items: start;
+	}
+
+	.cart-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 1rem;
+	}
+
+	.cart-list[hidden] {
+		display: none;
+	}
+
+	:global(.cart-line) {
+		display: grid;
+		grid-template-columns: 1fr auto auto auto;
+		align-items: center;
+		gap: 1.25rem;
+		padding: 1.25rem;
+		background: var(--color-white);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-card);
+	}
+
+	:global(.cart-line__name) {
+		font-size: 1.05rem;
+		margin: 0;
+	}
+
+	:global(.cart-line__meta) {
+		margin: 0;
+		font-size: 0.875rem;
+		color: var(--color-muted);
+	}
+
+	:global(.cart-line__controls) {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	:global(.qty-btn) {
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 1px solid var(--color-border);
+		border-radius: 50%;
+		background: var(--color-surface);
+		font-size: 1.1rem;
+		cursor: pointer;
+		transition: background-color 0.2s ease;
+	}
+
+	:global(.qty-btn:hover) {
+		background: var(--color-primary-soft);
+	}
+
+	:global(.cart-line__qty) {
+		min-width: 1.5rem;
+		text-align: center;
+		font-weight: 600;
+	}
+
+	:global(.cart-line__subtotal) {
+		margin: 0;
+		font-family: var(--font-display);
+		font-weight: 700;
+		font-size: 1.1rem;
+	}
+
+	:global(.cart-line__remove) {
+		background: none;
+		border: none;
+		color: var(--color-accent-strong);
+		font-weight: 600;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	.summary {
+		position: sticky;
+		top: 6rem;
+		padding: 1.75rem;
+		background: var(--color-ink);
+		color: rgb(255 255 255 / 0.85);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-card);
+	}
+
+	.summary h2 {
+		color: var(--color-white);
+		font-size: 1.4rem;
+	}
+
+	.summary__row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		font-size: 1.1rem;
+		margin-block: 1rem;
+	}
+
+	.summary__row strong {
+		font-family: var(--font-display);
+		font-size: 1.8rem;
+		color: var(--color-white);
+	}
+
+	.summary__note {
+		font-size: 0.9rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.summary__checkout {
+		width: 100%;
+		background: #25d366;
+		box-shadow: 0 10px 20px -10px #25d366;
+	}
+
+	.summary__checkout:hover {
+		background: #1ebe5a;
+	}
+
+	@media (max-width: 860px) {
+		.cart-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.summary {
+			position: static;
+		}
+
+		:global(.cart-line) {
+			grid-template-columns: 1fr auto;
+		}
+	}
+</style>

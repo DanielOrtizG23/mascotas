@@ -1,16 +1,230 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products, speciesInfo, speciesList } from '../data/products';
+import { site } from '../data/site';
+
+const featured = products.filter((product) => product.featured);
+const whatsappHref = `https://wa.me/${site.whatsappNumber}`;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Inicio">
+	<section class="hero">
+		<div class="container hero__grid">
+			<div class="hero__content">
+				<span class="eyebrow">Nutrición para tu mejor amigo</span>
+				<h1>Lo mejor para tu <span class="hero__accent">perro</span> y tu <span class="hero__accent">gato</span>.</h1>
+				<p class="hero__lead">
+					Alimento de calidad seleccionado para cada etapa de vida. Arma tu pedido y confírmalo con nosotros por WhatsApp.
+				</p>
+				<div class="hero__actions">
+					<a class="btn btn-accent" href="/perros">Comprar para perros</a>
+					<a class="btn btn-outline" href="/gatos">Comprar para gatos</a>
+				</div>
+			</div>
+			<div class="hero__visual" aria-hidden="true">
+				<img src="/images/product-placeholder.svg" alt="" width="400" height="400" />
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="section__header">
+				<div>
+					<h2>Compra por mascota</h2>
+					<p>Encuentra el alimento ideal según tu compañero.</p>
+				</div>
+			</div>
+			<div class="categories">
+				{
+					speciesList.map((species) => (
+						<a class={`category category--${species}`} href={`/${species}`}>
+							<span class="category__emoji" aria-hidden="true">{species === 'perros' ? '🐶' : '🐱'}</span>
+							<h3>{speciesInfo[species].title}</h3>
+							<p>{speciesInfo[species].description}</p>
+							<span class="category__cta">Ver productos →</span>
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--tinted">
+		<div class="container">
+			<div class="section__header">
+				<div>
+					<h2>Productos destacados</h2>
+					<p>Los favoritos de nuestros clientes.</p>
+				</div>
+				<a class="btn btn-outline" href="/perros">Ver todo el catálogo</a>
+			</div>
+			<div class="grid">
+				{featured.map((product) => <ProductCard product={product} />)}
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container cta">
+			<div>
+				<h2>¿Tienes dudas sobre qué alimento elegir?</h2>
+				<p>Escríbenos por WhatsApp y te ayudamos a encontrar la mejor opción para tu mascota.</p>
+			</div>
+			<a class="btn btn-primary" href={whatsappHref} target="_blank" rel="noopener">Escribir por WhatsApp</a>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.hero {
+		position: relative;
+		overflow: hidden;
+		background:
+			radial-gradient(circle at 85% 20%, rgb(255 107 91 / 0.18), transparent 40%),
+			radial-gradient(circle at 10% 90%, rgb(10 147 150 / 0.2), transparent 45%),
+			linear-gradient(180deg, #f1fbfb 0%, #ffffff 100%);
+		padding-block: clamp(3rem, 8vw, 6rem);
+	}
+
+	.hero__grid {
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		align-items: center;
+		gap: 3rem;
+	}
+
+	.hero h1 {
+		font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		margin-bottom: 1.25rem;
+	}
+
+	.hero__accent {
+		background: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	.hero__lead {
+		font-size: 1.1rem;
+		color: var(--color-muted);
+		max-width: 36rem;
+		margin-bottom: 2rem;
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+	}
+
+	.hero__visual img {
+		width: min(100%, 420px);
+		margin-inline: auto;
+		border-radius: 2rem;
+		box-shadow: var(--shadow-card);
+		animation: float 6s ease-in-out infinite;
+	}
+
+	@keyframes float {
+		50% {
+			transform: translateY(-12px);
+		}
+	}
+
+	.categories {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.category {
+		display: flex;
+		flex-direction: column;
+		padding: 2rem;
+		border-radius: var(--radius-lg);
+		text-decoration: none;
+		color: var(--color-white);
+		min-height: 260px;
+		transition: transform 0.25s ease;
+	}
+
+	.category:hover {
+		transform: translateY(-4px);
+	}
+
+	.category h3 {
+		font-size: 1.75rem;
+		margin-top: auto;
+	}
+
+	.category p {
+		margin: 0 0 1rem;
+		opacity: 0.92;
+	}
+
+	.category--perros {
+		background: linear-gradient(135deg, var(--color-primary), #3ccfcf);
+	}
+
+	.category--gatos {
+		background: linear-gradient(135deg, var(--color-accent), #ffa07a);
+	}
+
+	.category__emoji {
+		font-size: 2.5rem;
+	}
+
+	.category__cta {
+		font-weight: 600;
+	}
+
+	.section--tinted {
+		background: var(--color-surface);
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.cta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: clamp(2rem, 5vw, 3.5rem);
+		border-radius: var(--radius-lg);
+		background: var(--color-ink);
+		color: rgb(255 255 255 / 0.8);
+	}
+
+	.cta h2 {
+		color: var(--color-white);
+		font-size: clamp(1.5rem, 3vw, 2rem);
+	}
+
+	.cta p {
+		margin: 0;
+	}
+
+	@media (max-width: 860px) {
+		.hero__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.hero__visual {
+			order: -1;
+		}
+
+		.hero__visual img {
+			width: min(70%, 320px);
+		}
+	}
+</style>

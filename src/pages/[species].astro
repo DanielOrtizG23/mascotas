@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products, speciesInfo, speciesList, type Species } from '../data/products';
+
+export function getStaticPaths() {
+  return speciesList.map((species) => ({ params: { species }, props: { species } }));
+}
+
+interface Props {
+  species: Species;
+}
+
+const { species } = Astro.props;
+const info = speciesInfo[species];
+const items = products.filter((product) => product.species === species);
+---
+
+<BaseLayout title={info.title} description={info.description}>
+	<section class="page-hero">
+		<div class="container">
+			<span class="eyebrow">{info.label}</span>
+			<h1>{info.title}</h1>
+			<p>{info.description}</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container grid">
+			{items.map((product) => <ProductCard product={product} />)}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.page-hero {
+		background: linear-gradient(180deg, var(--color-primary-soft), var(--color-white));
+		padding-block: clamp(2.5rem, 6vw, 4rem);
+	}
+
+	.page-hero h1 {
+		font-size: clamp(2.25rem, 5vw, 3.5rem);
+		font-weight: 800;
+	}
+
+	.page-hero p {
+		color: var(--color-muted);
+		font-size: 1.1rem;
+		max-width: 36rem;
+		margin: 0;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1.5rem;
+	}
+</style>

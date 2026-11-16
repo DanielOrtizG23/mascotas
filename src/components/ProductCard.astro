@@ -1,0 +1,118 @@
+---
+import type { Product } from '../data/products';
+import { formatPrice } from '../lib/format';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const productUrl = `/producto/${product.slug}`;
+---
+
+<article class="product-card">
+	<a class="product-card__media" href={productUrl} tabindex="-1" aria-hidden="true">
+		<img src={product.image} alt="" width="400" height="400" loading="lazy" />
+		{product.featured && <span class="product-card__badge">Destacado</span>}
+	</a>
+	<div class="product-card__body">
+		<p class="product-card__weight">{product.weight}</p>
+		<h3 class="product-card__name">
+			<a href={productUrl}>{product.name}</a>
+		</h3>
+		<p class="product-card__desc">{product.shortDescription}</p>
+		<div class="product-card__footer">
+			<span class="product-card__price">{formatPrice(product.price)}</span>
+			<button type="button" class="btn btn-primary" data-add-to-cart={product.slug}>Agregar</button>
+		</div>
+	</div>
+</article>
+
+<style>
+	.product-card {
+		display: flex;
+		flex-direction: column;
+		background: var(--color-white);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		box-shadow: var(--shadow-card);
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.product-card:hover {
+		transform: translateY(-4px);
+	}
+
+	.product-card__media {
+		position: relative;
+		display: block;
+		background: var(--color-surface);
+	}
+
+	.product-card__media img {
+		width: 100%;
+		aspect-ratio: 1;
+		object-fit: cover;
+	}
+
+	.product-card__badge {
+		position: absolute;
+		top: 0.9rem;
+		left: 0.9rem;
+		padding: 0.3rem 0.7rem;
+		border-radius: 999px;
+		background: var(--color-accent);
+		color: var(--color-white);
+		font: 600 0.75rem/1 var(--font-display);
+		letter-spacing: 0.04em;
+	}
+
+	.product-card__body {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		padding: 1.25rem;
+	}
+
+	.product-card__weight {
+		margin: 0 0 0.25rem;
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--color-primary-strong);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.product-card__name {
+		font-size: 1.1rem;
+	}
+
+	.product-card__name a {
+		text-decoration: none;
+	}
+
+	.product-card__name a:hover {
+		color: var(--color-primary);
+	}
+
+	.product-card__desc {
+		margin: 0 0 1.25rem;
+		font-size: 0.92rem;
+		color: var(--color-muted);
+	}
+
+	.product-card__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-top: auto;
+	}
+
+	.product-card__price {
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		font-weight: 700;
+	}
+</style>

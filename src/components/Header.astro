@@ -1,0 +1,130 @@
+---
+import { site } from '../data/site';
+
+const navLinks = [
+  { href: '/', label: 'Inicio' },
+  { href: '/perros', label: 'Perros' },
+  { href: '/gatos', label: 'Gatos' },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+	<div class="container bar">
+		<a class="brand" href="/" aria-label={`${site.name} - inicio`}>
+			<span class="brand__mark" aria-hidden="true">🐾</span>
+			<span class="brand__name">{site.name}</span>
+		</a>
+
+		<nav aria-label="Principal">
+			<ul class="nav">
+				{
+					navLinks.map(({ href, label }) => (
+						<li>
+							<a href={href} aria-current={currentPath === href ? 'page' : undefined}>
+								{label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<a class="cart-link btn btn-accent" href="/carrito">
+			<span>Carrito</span>
+			<span class="cart-link__count" data-cart-count>0</span>
+		</a>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: rgb(255 255 255 / 0.85);
+		backdrop-filter: blur(12px);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		min-height: 4.5rem;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-decoration: none;
+		font-family: var(--font-display);
+		font-weight: 800;
+		font-size: 1.15rem;
+	}
+
+	.brand__mark {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 0.75rem;
+		background: linear-gradient(135deg, var(--color-primary), #3ccfcf);
+		font-size: 1rem;
+	}
+
+	.nav {
+		display: flex;
+		gap: 0.25rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.nav a {
+		display: block;
+		padding: 0.5rem 0.9rem;
+		border-radius: 999px;
+		text-decoration: none;
+		font-weight: 500;
+		color: var(--color-muted);
+		transition: background-color 0.2s ease, color 0.2s ease;
+	}
+
+	.nav a:hover,
+	.nav a[aria-current='page'] {
+		background: var(--color-primary-soft);
+		color: var(--color-primary-strong);
+	}
+
+	.cart-link {
+		padding-inline: 1rem;
+	}
+
+	.cart-link__count {
+		display: grid;
+		place-items: center;
+		min-width: 1.6rem;
+		height: 1.6rem;
+		padding-inline: 0.4rem;
+		border-radius: 999px;
+		background: var(--color-white);
+		color: var(--color-accent-strong);
+		font-size: 0.8rem;
+	}
+
+	@media (max-width: 720px) {
+		.bar {
+			flex-wrap: wrap;
+			padding-block: 0.75rem;
+		}
+
+		.nav {
+			order: 3;
+			width: 100%;
+			justify-content: center;
+		}
+	}
+</style>
